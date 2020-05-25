@@ -1,7 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
+from forms import LoginForm, RegistrationForm
 
 #special python variable with the name of the module
 app=Flask(__name__)
+#The secret key requiered by WTForms
+app.config['SECRET_KEY']='f0902237d035d764f7d9cd235d64d860'
 
 
 #define routes
@@ -12,11 +15,13 @@ def landing():
 
 @app.route("/login")
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 @app.route("/register")
 def register():
-    return render_template('register.html')
+    form = RegistrationForm()
+    return render_template('register.html', form=form)
 
 @app.route("/about")
 def about():
