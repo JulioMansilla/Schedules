@@ -17,3 +17,7 @@ def login():
 @app.route("/register")
 def register():
     return render_template('register.html')
+
+@app.route("/about")
+def about():
+    return "<h1>WIP ? Wow Incomplete Programs</h1>"
