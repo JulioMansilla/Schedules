@@ -16,6 +16,13 @@ def landing():
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    #Hardcoded test case, we will remove it after we implement sql
+    if form.validate_on_submit():
+        if form.email.data == 'bob@bob.com' and form.password.data == 'bobster123':
+            flash('You have been logged in!', 'success')
+            return redirect(url_for('landing'))
+        else:
+            flash('Login Unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
