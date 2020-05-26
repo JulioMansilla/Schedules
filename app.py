@@ -13,12 +13,12 @@ app.config['SECRET_KEY']='f0902237d035d764f7d9cd235d64d860'
 def landing():
     return render_template('landing.html')
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     return render_template('login.html', form=form)
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     return render_template('register.html', form=form)
