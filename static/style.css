@@ -1,4 +1,20 @@
-#layout{
-  border: 1px solid gray;
+body{
   margin-top:60px;
+  color: #fff;
+	background: #63738a;
+	font-family: 'Roboto', sans-serif;
+}
+.form-control{
+		height: 40px;
+		box-shadow: none;
+		color: #969fa4;
+}
+#register{
+		color: #636363;
+		border-radius: 3px;
+    margin-bottom: 15px;
+    background: #f2f3f7;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    margin-top: 30%;
+    padding-top: 25px;
 }
