@@ -16,10 +16,13 @@ class User(db.Model):
     username = db.Column(db.String(24), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    password = db.Column(db.String(32), nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+    #                           \/ python class in line 26
     periods = db.relationship('Periods', backref='owner', lazy=True)
+
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+
 class Periods(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable = False);
@@ -28,10 +31,15 @@ class Periods(db.Model):
     time = db.Column(db.String(20), nullable = False);
     day = db.Column(db.String(25), nullable = False);
     color = db.Column(db.String(30), nullable = False);
+
     period = db.Column(db.SmallInteger, nullable = False);
+                                        #this calls the database TABLE
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+
     def __repr__(self):
         return f"Periods('{self.name}', '{self.room}', '{self.teacher}', '{self.time}', '{self.period}')"
+
 #define routes
 @app.route("/")
 @app.route("/landing")
