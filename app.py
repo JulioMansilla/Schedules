@@ -2,13 +2,14 @@ from flask import Flask, render_template, url_for, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from forms import LoginForm, RegistrationForm
-
+from flask_bcrypt import Bcrypt
 #special python variable with the name of the module
 app=Flask(__name__)
 #The secret key requiered by WTForms
 app.config['SECRET_KEY']='f0902237d035d764f7d9cd235d64d860'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 #define database model
 class User(db.Model):
@@ -62,6 +63,16 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        #hash form.password.data and decode the object to a utf-8 string
+        hashed_pass = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        #create an instance of the User object and pass it the form data and hashed password
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_pass)
+        #add the user object to the session
+        db.session.add(new_user)
+        #commit the new_user object to the database (inserts a row to our user table inside site.db)
+        #Remember you can always wipe your tables completely by calling the db.drop_all() method!
+        db.session.commit()
+
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('landing'))
     return render_template('register.html', form=form)
